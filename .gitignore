@@ -1,0 +1,4 @@
+widgets/out/
+widgets/__pycache__/
+widgets/.build.lock
+sync.sh
