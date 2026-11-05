@@ -18,6 +18,7 @@ OpenAPI schema: /openapi.json
 
 - Consult `/openapi.json` on any API work.
 - Lists are paginated with `limit` and `offset`; the `X-Total-Count` response header carries the total record count before paging.
+- Completed tasks are not shown by default: a list without `status` already omits `done`; pass `status=all` only when completed tasks are explicitly needed.
 - The server's local time equals the host time zone.
 END_api
 
