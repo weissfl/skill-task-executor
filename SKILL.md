@@ -31,4 +31,13 @@ START_key
 - The key value stays in the `tt_key` file and in the Authorization header.
 END_key
 
+START_working-patterns
+### Working patterns
+
+1. **Closing a task**
+   `TRIGGER: the task is finished → ACTION: assemble the "Summary" block (see below); GET the task; PATCH in one request: description = current description + the "Summary" block, status=done → GOAL: the task is done, with the Summary in its description.`
+
+The "Summary" block appended to the description: **Decision** — what was done and how; **Rationale** — why this way, including rejected alternatives; **Problems** — what got in the way and how it was worked around; **Deviations** — assumptions and compromises against the original scope; omit empty items.
+END_working-patterns
+
 END_task-executor
