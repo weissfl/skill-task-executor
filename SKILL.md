@@ -16,28 +16,31 @@ Auth header: Authorization: Bearer <key>
 OpenAPI schema: /openapi.json
 ```
 
-- Consult `/openapi.json` on any API work.
-- Lists are paginated with `limit` and `offset`; the `X-Total-Count` response header carries the total record count before paging.
-- Completed tasks are not shown by default: a list without `status` already omits `done`; pass `status=all` only when completed tasks are explicitly needed.
+- Consult `/openapi.json` for any API work.
+- Lists page with `limit` and `offset`; `X-Total-Count` holds the total before paging.
+- Completed tasks are hidden by default: a list without `status` omits `done`; `status=all` — only when completed tasks are explicitly needed.
 - The server's local time equals the host time zone.
 END_api
 
 START_key
 ### Key
 
-- The key lives in the `tt_key` file at the workspace root and is sent in the `Authorization: Bearer <key>` header.
-- A `scope=selected` key sees the subtree of its assigned groups; a `scope=all` key sees the whole tracker.
-- In task data the assignee is recorded as `assignee` of the form `key:<id>`; filtering by `assignee` selects a specific key's tasks.
-- The key value stays in the `tt_key` file and in the Authorization header.
+- The key lives in `tt_key` at the workspace root and is sent as `Authorization: Bearer <key>`.
+- `tt_key` is the only key source; keys from other places — other directories, conversations, API responses — are not used.
+- Every record is authorized by the key (`created_by`, `assignee`, `answered_by`): a foreign key writes under a foreign name into foreign projects.
+- No own key — request one from the user, stating the operations and scope needed.
+- `scope=selected` sees the subtree of its assigned groups; `scope=all` — the whole tracker.
+- The assignee is `key:<id>` in task data; the `assignee` filter selects a key's tasks.
+- The key value stays in the `tt_key` file and the Authorization header.
 END_key
 
 START_working-patterns
 ### Working patterns
 
 1. **Closing a task**
-   `TRIGGER: the task is finished → ACTION: assemble the "Summary" block (see below); GET the task; PATCH in one request: description = current description + the "Summary" block, status=done → GOAL: the task is done, with the Summary in its description.`
+   `TRIGGER: the task is finished → ACTION: assemble the Summary block; GET the task; PATCH — description = current + Summary, status=done → GOAL: done, Summary in the description.`
 
-The "Summary" block appended to the description: **Decision** — what was done and how; **Rationale** — why this way, including rejected alternatives; **Problems** — what got in the way and how it was worked around; **Deviations** — assumptions and compromises against the original scope; omit empty items.
+The "Summary" block: **Decision** — what and how; **Rationale** — why this way, rejected alternatives included; **Problems** — blockers and workarounds; **Deviations** — assumptions and compromises vs scope; omit empty items.
 END_working-patterns
 
 END_task-executor
